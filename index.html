@@ -3,200 +3,162 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Car Lift Pricing</title>
+<title>Car Lift UAE</title>
+
 <style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: 
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.75)),
+        url('https://images.unsplash.com/photo-1503376780353-7e6692767b70') no-repeat center center/cover;
+    color: white;
+}
 
-    body {
+.overlay {
+    background: rgba(0,0,0,0.7);
+    min-height: 100vh;
+    padding: 20px;
+}
 
-        margin: 0;
+.app {
+    max-width: 400px;
+    margin: auto;
+}
 
-        font-family: Arial, sans-serif;
+.card {
+    background: rgba(30,30,30,0.9);
+    padding: 20px;
+    border-radius: 15px;
+}
 
-        background: #121212;
+h2 {
+    text-align: center;
+}
 
-        color: white;
+select, input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: none;
+}
 
-    }
+button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #00c853;
+    color: white;
+    font-size: 16px;
+    margin-top: 10px;
+}
 
-    .app {
+.whatsapp {
+    background: #25D366;
+}
 
-        max-width: 400px;
+.result {
+    margin-top: 15px;
+    font-size: 22px;
+    text-align: center;
+    color: #00e676;
+}
 
-        margin: auto;
-
-        padding: 20px;
-
-    }
-
-    .card {
-
-        background: #1e1e1e;
-
-        padding: 20px;
-
-        border-radius: 15px;
-
-        box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-
-    }
-
-    h2 {
-
-        text-align: center;
-
-        margin-bottom: 20px;
-
-    }
-
-    select, input {
-
-        width: 100%;
-
-        padding: 12px;
-
-        margin: 10px 0;
-
-        border-radius: 10px;
-
-        border: none;
-
-        font-size: 16px;
-
-    }
-
-    button {
-
-        width: 100%;
-
-        padding: 15px;
-
-        border: none;
-
-        border-radius: 10px;
-
-        background: #00c853;
-
-        color: white;
-
-        font-size: 18px;
-
-        margin-top: 10px;
-
-        cursor: pointer;
-
-    }
-
-    button:hover {
-
-        background: #00b248;
-
-    }
-
-    .result {
-
-        margin-top: 20px;
-
-        font-size: 22px;
-
-        text-align: center;
-
-        color: #00e676;
-
-    }
-
-    .label {
-
-        margin-top: 10px;
-
-        font-size: 14px;
-
-        opacity: 0.8;
-
-    }
+.small {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 10px;
+}
 </style>
 </head>
+
 <body>
+
+<div class="overlay">
 <div class="app">
 <div class="card">
-<h2>Car Lift Pricing</h2>
-<div class="label">Trip Type</div>
-<select id="tripType">
-<option value="booking">Booking Car Lift</option>
-<option value="normal">Normal Car Lift</option>
-<option value="other">Traveling to Other Emirates</option>
+
+<h2>🚖 Car Lift UAE</h2>
+
+<select id="tripType" onchange="toggleRoute()">
+    <option value="booking">Booking Car Lift</option>
+    <option value="other">Other Emirates</option>
 </select>
-<div class="label">Distance (KM)</div>
-<input type="number" id="distance" placeholder="Enter KM">
-<div class="label">Waiting Time (minutes)</div>
-<input type="number" id="waiting" placeholder="Enter minutes">
-<button onclick="calculateFare()">Calculate</button>
+
+<div id="kmSection">
+    <input type="number" id="distance" placeholder="Distance (KM)">
+    <input type="number" id="waiting" placeholder="Waiting Time (minutes)">
+</div>
+
+<div id="routeSection" style="display:none;">
+    <select id="route">
+        <option value="50">Dubai → Sharjah (60 AED)</option>
+        <option value="170">Dubai → Abu Dhabi (250 AED)</option>
+        <option value="70">Dubai → Ajman (100 AED)</option>
+        <option value="120">Dubai → Ras Al Khaimah (150 AED)</option>
+        <option value="160">Dubai → Fujairah (190 AED)</option>
+        <option value="170">Dubai → Al Ain (200 AED)</option>
+    </select>
+</div>
+
+<button onclick="calculateFare()">Calculate Fare</button>
+
 <div class="result" id="result">AED 0.00</div>
+
+<button class="whatsapp" onclick="sendWhatsApp()">📱 Check Availability Over WhatsApp</button>
+
+<div class="small">WhatsApp: +971505402261</div>
+
 </div>
 </div>
+</div>
+
 <script>
+let finalFare = 0;
+
+function toggleRoute() {
+    let type = document.getElementById("tripType").value;
+    document.getElementById("kmSection").style.display = (type === "other") ? "none" : "block";
+    document.getElementById("routeSection").style.display = (type === "other") ? "block" : "none";
+}
 
 function calculateFare() {
-
     let type = document.getElementById("tripType").value;
+    let fare = 0;
 
-    let distance = parseFloat(document.getElementById("distance").value) || 0;
+    if (type === "other") {
+        fare = parseFloat(document.getElementById("route").value);
+    } else {
+        let distance = parseFloat(document.getElementById("distance").value) || 0;
+        let waiting = parseFloat(document.getElementById("waiting").value) || 0;
 
-    let waiting = parseFloat(document.getElementById("waiting").value) || 0;
+        let baseFare = (type === "booking") ? 8 : 4;
+        let perKm = 1.7;
+        let minFare = (type === "booking") ? 12 : 8;
+        let waitingRate = 0.5;
 
-    // Rates
+        fare = baseFare + (distance * perKm) + (waiting * waitingRate);
 
-    let baseFare = 0;
-
-    let perKm = 0;
-
-    let minFare = 0;
-
-    let waitingRate = 0.5; // AED per minute
-
-    if (type === "booking") {
-
-        baseFare = 8;
-
-        perKm = 1.7;
-
-        minFare = 12;
-
-    } 
-
-    else if (type === "normal") {
-
-        baseFare = 4;
-
-        perKm = 1.7;
-
-        minFare = 8;
-
-    } 
-
-    else if (type === "other") {
-
-        baseFare = 0;
-
-        perKm = 1.4;
-
-        minFare = 15;
-
+        if (fare < minFare) fare = minFare;
     }
 
-    let fare = baseFare + (distance * perKm) + (waiting * waitingRate);
-
-    // Apply minimum fare
-
-    if (fare < minFare) {
-
-        fare = minFare;
-
-    }
-
+    finalFare = fare;
     document.getElementById("result").innerText = "AED " + fare.toFixed(2);
+}
 
+function sendWhatsApp() {
+    if (finalFare === 0) {
+        alert("Please calculate fare first");
+        return;
+    }
+
+    let message = "Hello, I want to book a ride. Estimated Fare: AED " + finalFare;
+    let url = "https://wa.me/971505402261?text=" + encodeURIComponent(message);
+    window.open(url, "_blank");
 }
 </script>
+
 </body>
 </html>
- 
