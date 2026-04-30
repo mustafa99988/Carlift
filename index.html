@@ -103,11 +103,11 @@ button {
 <div id="routeSection" style="display:none;">
     <select id="route">
         <option value="70">Dubai → Sharjah (70 AED)</option>
-        <option value="200">Dubai → Abu Dhabi (200 AED)</option>
-        <option value="85">Dubai → Ajman (85 AED)</option>
-        <option value="130">Dubai → Ras Al Khaimah (130 AED)</option>
-        <option value="180">Dubai → Fujairah (180 AED)</option>
-        <option value="190">Dubai → Al Ain (190 AED)</option>
+        <option value="200">Dubai → Abu Dhabi (220 AED)</option>
+        <option value="85">Dubai → Ajman (90 AED)</option>
+        <option value="130">Dubai → Ras Al Khaimah (140 AED)</option>
+        <option value="180">Dubai → Fujairah (190 AED)</option>
+        <option value="190">Dubai → Al Ain (200 AED)</option>
     </select>
 </div>
 
@@ -144,9 +144,9 @@ function calculateFare() {
         let waiting = parseFloat(document.getElementById("waiting").value) || 0;
 
         let baseFare = (type === "booking") ? 8 : 4;
-        let perKm = 1.7;
+        let perKm = 2;
         let minFare = (type === "booking") ? 12 : 8;
-        let waitingRate = 0.5;
+        let waitingRate = 0.2;
 
         fare = baseFare + (distance * perKm) + (waiting * waitingRate);
 
@@ -167,7 +167,7 @@ function sendWhatsApp() {
         ? "Hello, I want to book a ride. Estimated Fare: AED " + finalFare
         : "مرحبا، أريد حجز رحلة. السعر المتوقع: " + finalFare + " درهم";
 
-    let url = "https://wa.me/971505402261?text=" + encodeURIComponent(message);
+    let url = "https://wa.me/971553393943?text=" + encodeURIComponent(message);
     window.open(url, "_blank");
 }
 
@@ -179,7 +179,7 @@ function toggleLang() {
         document.getElementById("title").innerText = "🚖 خدمة توصيل";
         document.getElementById("calcBtn").innerText = "احسب السعر";
         document.getElementById("waBtn").innerText = "📱 تواصل لمعرفه امكانيه الحجز";
-        document.getElementById("phone").innerText = "واتساب: +971505402261";
+        document.getElementById("phone").innerText = "واتساب: +971553393943";
 
         document.getElementById("distance").placeholder = "المسافة (كم)";
         document.getElementById("waiting").placeholder = "وقت الانتظار (دقائق)";
@@ -191,7 +191,7 @@ function toggleLang() {
         document.getElementById("title").innerText = "🚖 Car Lift UAE";
         document.getElementById("calcBtn").innerText = "Calculate Fare";
         document.getElementById("waBtn").innerText = "📱 Book via WhatsApp";
-        document.getElementById("phone").innerText = "WhatsApp: +971505402261";
+        document.getElementById("phone").innerText = "WhatsApp: +971553393943";
 
         document.getElementById("distance").placeholder = "Distance (KM)";
         document.getElementById("waiting").placeholder = "Waiting Time (minutes)";
