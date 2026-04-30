@@ -144,10 +144,10 @@ function calculateFare() {
         let distance = parseFloat(document.getElementById("distance").value) || 0;
         let waiting = parseFloat(document.getElementById("waiting").value) || 0;
 
-        let baseFare = (type === "booking") ? 8 : 4;
+        let baseFare = (type === "booking") ? 0 : 0;
         let perKm = 2;
         let minFare = (type === "booking") ? 12 : 8;
-        let waitingRate = 0.007;
+        let waitingRate = 0.05;
 
         fare = baseFare + (distance * perKm) + (waiting * waitingRate);
 
